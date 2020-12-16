@@ -18,7 +18,7 @@ const options = {
     callbacks: {
       label: function (tooltipItem, data) {
         return numeral(tooltipItem.value).format("+0,0");
-      },
+      }, 
     },
   },
   scales: {
@@ -47,7 +47,7 @@ const options = {
   },
 };
 
-const buildChartData = (data, casesType) => {
+const buildChartData = (data, casesType = "cases") => {
   let chartData = [];
   let lastDataPoint;
   for (let date in data.cases) {
@@ -63,7 +63,7 @@ const buildChartData = (data, casesType) => {
   return chartData;
 };
 
-function LineGraph({ casesType }) {
+function LineGraph({ casesType= "cases", ...props }) {
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -76,7 +76,7 @@ function LineGraph({ casesType }) {
           let chartData = buildChartData(data, casesType);
           setData(chartData);
           console.log(chartData);
-          // buildChart(chartData);
+        //   buildChart(chartData);
         });
     };
 
@@ -84,7 +84,7 @@ function LineGraph({ casesType }) {
   }, [casesType]);
 
   return (
-    <div>
+    <div className={props.className}>
       {data?.length > 0 && (
         <Line
           data={{
